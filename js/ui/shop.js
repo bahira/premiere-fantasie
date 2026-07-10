@@ -6,7 +6,7 @@ import { audio } from '../engine/audio.js';
 const STAT_KEYS = ['atk', 'mag', 'def', 'mdef'];
 const STAT_LABELS = { atk: 'ATQ', mag: 'MAG', def: 'DEF', mdef: 'MDF' };
 const STAT_COLORS = { atk: '#e74c3c', mag: '#3498db', def: '#2ecc71', mdef: '#9b59b6' };
-const DEFAULT_STOCK = ['potion','hi_potion','ether','antidote','eye_drops','phoenix_down','dagger','broadsword','rod','healing_rod','leather_vest','mage_robe','bronze_armor','priest_robe','sash'];
+const DEFAULT_STOCK = ['potion','hi_potion','ether','elixir','antidote','eye_drops','phoenix_down','tent','dagger','mythril_dagger','broadsword','rod','healing_rod','flame_rod','leather_vest','mage_robe','bronze_armor','priest_robe','plate_mail','ninja_vest','sash','ribbon'];
 
 export const shop = {
   _root: null,
