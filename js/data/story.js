@@ -286,7 +286,7 @@ export const STORY = {
           { x: 440, y: 300, w: 150, h: 120, enemies: ['construct_mana','ombre_ancienne'], rate: 0.03, stepThreshold: 18, expReward: 280, apReward: 9, gilReward: 65 },
         ],
         pois: [
-          { x: 560, y: 60, label: 'Sommet', icon: '🌳', type: 'advance', action: 'Monter au sommet' },
+          { x: 560, y: 60, label: 'Sommet', icon: '🌳', type: 'advance', action: 'Affronter la source de la Brume' },
           { x: 60, y: 60, label: 'Camp de brume', icon: '🏕️', type: 'rest', action: 'Se reposer' },
           { x: 340, y: 420, label: 'Sauvegarde', icon: '💾', type: 'save', action: 'Sauvegarder' },
           { x: 60, y: 420, label: 'Coffre Ancestral', icon: '📦', type: 'chest', action: 'Ouvrir', contents: { item: { id: 'elixir', count: 1 } } },
@@ -408,7 +408,7 @@ export const STORY = {
           { x: 440, y: 300, w: 160, h: 140, enemies: ['djinn','gargoyyle'], rate: 0.03, stepThreshold: 20, expReward: 350, apReward: 10, gilReward: 80 },
         ],
         pois: [
-          { x: 600, y: 60, label: 'Trône Royal', icon: '👑', type: 'advance', action: 'Entrer dans la salle du trône' },
+          { x: 600, y: 60, label: 'Trône Royal', icon: '👑', type: 'advance', action: 'Affronter les gardes du palais' },
           { x: 80, y: 80, label: 'Autel de Lumière', icon: '✨', type: 'rest', action: 'Se reposer' },
           { x: 340, y: 420, label: 'Sauvegarde', icon: '💾', type: 'save', action: 'Sauvegarder' },
           { x: 60, y: 440, label: 'Coffre Royal', icon: '📦', type: 'chest', action: 'Ouvrir', contents: { item: { id: 'elixir', count: 2 } } },

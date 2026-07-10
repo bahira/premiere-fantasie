@@ -74,7 +74,7 @@ export class FieldScene {
     };
 
     // Boss chapters use special music
-    const bossChapters = [9, 12]; // chapter IDs with boss fights
+    const bossChapters = [4, 9, 12]; // chapter IDs with boss fights
     const isBossChapter = bossChapters.includes(ch.id);
 
     let musicScene;
@@ -356,10 +356,16 @@ export class FieldScene {
   _handlePOI(poi) {
     if (poi.type === 'advance') {
       this._cleanupMap();
-      this._fadeTransition(() => {
-        advanceChapter();
-        this._playChapter();
-      });
+      const ch = currentChapter();
+      if (ch && ch.battle) {
+        // Chapter has a boss/battle — trigger it before advancing
+        this._fadeTransition(() => this._startStoryBattle(ch));
+      } else {
+        this._fadeTransition(() => {
+          advanceChapter();
+          this._playChapter();
+        });
+      }
     } else if (poi.type === 'rest') {
       for (const m of GAME.party) { m.hp = m.maxHp; m.mp = m.maxMp; m.alive = true; }
       audio.sfx('magic_cure');
