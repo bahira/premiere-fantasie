@@ -193,10 +193,49 @@ export class GameMenu {
     this._subPanel = () => this._panelItems();
     const items = GAME.inventory.listItems();
     if (!items.length) { this._renderDetail('Aucun objet.'); return; }
-    const html = items.map(it =>
-      `<div class="mm-row"><span>${it.icon||'🧪'} ${it.name}</span><span>×${it.count}</span><br><small>${it.desc||''}</small></div>`
-    ).join('');
-    this._renderDetail(`<b>Objets</b><br>${html}`);
+    const m = GAME.party[this._memberIdx] || GAME.party[0];
+    const html = items.map((it, idx) => {
+      const usable = it.type === 'consume' && (it.heal || it.heal_mp || it.revive);
+      return `<div class="mm-row${usable ? ' item-usable' : ''}" data-item-id="${it.id}"${usable ? ' style="cursor:pointer;"' : ''}>` +
+        `<span>${it.icon||'🧪'} ${it.name} ×${it.count}</span>` +
+        `${usable ? '<span class="item-use-hint">▸ Utiliser</span>' : ''}` +
+        `<br><small>${it.desc||''}</small></div>`;
+    }).join('');
+    this._renderDetail(`<b>Objets — ${m?.name || '?'}</b><br><small style="color:var(--muted)">Cliquez sur un objet consommable pour l'utiliser sur ${m?.name || 'ce membre'}.</small><br>${html}`);
+    setTimeout(() => {
+      const detail = this.root?.querySelector('.mm-detail-body');
+      if (!detail || !m) return;
+      detail.querySelectorAll('.item-usable[data-item-id]').forEach(el => {
+        el.onclick = () => {
+          const itemId = el.dataset.itemId;
+          const itDef = getItem(itemId);
+          if (!itDef) return;
+          const count = GAME.inventory.getCount(itemId);
+          if (count <= 0) return;
+          let applied = false;
+          if (itDef.revive && !m.alive) {
+            m.alive = true;
+            m.hp = Math.min(m.maxHp, itDef.heal || 100);
+            applied = true;
+          } else if (m.alive) {
+            if (itDef.heal && m.hp < m.maxHp) {
+              m.hp = Math.min(m.maxHp, m.hp + itDef.heal);
+              applied = true;
+            }
+            if (itDef.heal_mp && m.mp < m.maxMp) {
+              m.mp = Math.min(m.maxMp, m.mp + itDef.heal_mp);
+              applied = true;
+            }
+          }
+          if (applied) {
+            GAME.inventory.remove(itemId, 1);
+            audio.sfx('heal');
+            this._renderSide();
+            this._panelItems();
+          }
+        };
+      });
+    }, 50);
   }
 
   // ─── ÉQUIPEMENT ──────────────────────────────────────────────────────

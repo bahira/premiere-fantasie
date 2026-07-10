@@ -37,6 +37,8 @@ export class Inventory {
     if (this.equipment[id]) { this.equipment[id] -= n; if (this.equipment[id] <= 0) delete this.equipment[id]; }
   }
 
+  getCount(id) { return this.items[id] || 0; }
+
   listItems() {
     return Object.keys(this.items).filter(id => this.items[id] > 0).map(id => ({ id, ...getItem(id), count: this.items[id] }));
   }
