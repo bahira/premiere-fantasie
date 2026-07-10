@@ -8,6 +8,7 @@ export const gameover = {
     GAME.scene = 'gameover';
     const el = document.createElement('div'); el.id = 'gameover-screen';
     el.innerHTML = `
+      <div class="go-bg" style="background:url('sprites/ui/gameover_bg.png') center/cover no-repeat"></div>
       <div class="go-inner">
         <h1>GAME OVER</h1>
         <p>L'équipe a succombé...</p>

@@ -126,8 +126,10 @@ button { font-family:var(--font); cursor:pointer; color:inherit; background:tran
 
 /* Placeholder for the 3D emblem (rendered in Three.js behind) */
 .title-emblem-3d {
-  width:80px; height:80px; margin:0 auto 28px;
+  width:120px; height:120px; margin:0 auto 28px;
   opacity:0; animation: emblemAppear 1.4s var(--ease) 0.3s both;
+  background:url('../sprites/ui/title_emblem.png') center/contain no-repeat;
+  filter:drop-shadow(0 0 20px rgba(241,196,15,0.5));
 }
 .title-emblem-ring {
   position:absolute; inset:0; border:2px solid rgba(241,196,15,0.4); border-radius:50%;
@@ -665,6 +667,8 @@ button { font-family:var(--font); cursor:pointer; color:inherit; background:tran
 
 /* ============ GAME OVER / THE END ============ */
 #gameover-screen, #theend-screen { position:fixed; inset:0; z-index:50; background:rgba(0,0,0,0.88); display:flex; align-items:center; justify-content:center; }
+.go-bg { position:absolute; inset:0; opacity:0.35; animation:bgFadeIn 1.5s ease both; }
+@keyframes bgFadeIn { from { opacity:0; } to { opacity:0.35; } }
 .go-inner, .te-inner { text-align:center; }
 .go-inner h1, .te-inner h1 { font-family:var(--serif); font-size:4rem; color:var(--red); letter-spacing:0.1em; }
 .te-inner h1 { color:var(--gold); }

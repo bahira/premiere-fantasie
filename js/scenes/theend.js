@@ -11,6 +11,7 @@ export const theend = {
     GAME.scene = 'theend';
     const el = document.createElement('div'); el.id = 'theend-screen';
     el.innerHTML = `
+      <div class="go-bg" style="background:url('sprites/ui/theend_bg.png') center/cover no-repeat"></div>
       <div class="te-inner">
         <h1>FIN</h1>
         <p class="te-epilogue">${STORY.premise}</p>

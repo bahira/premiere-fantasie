@@ -117,7 +117,18 @@ export class FieldScene {
 
   _updateHud() {
     const hp = document.getElementById('ff-hp');
-    if (hp && GAME.party.length) hp.textContent = GAME.party.map(m => `${m.name}:${m.hp}`).join(' | ');
+    if (hp && GAME.party.length) {
+      hp.innerHTML = GAME.party.map(m => {
+        const pMap = { zidane:'thief_sprite.png', luan:'thief_sprite.png', knight:'knight_sprite.png',
+          aldric:'knight_sprite.png', mage:'mage_sprite.png', mira:'mage_sprite.png',
+          healer:'healer_sprite.png', selia:'healer_sprite.png' };
+        const sprite = pMap[m.id] || pMap[m.name?.toLowerCase()] || '';
+        const portrait = sprite ? `<img src="sprites/heroes/${sprite}" class="hud-mini-portrait" alt="${m.name}">` : '';
+        const hpPct = Math.max(0, (m.hp / (m.maxHp || 1)) * 100);
+        const hpColor = hpPct > 60 ? '#2ecc71' : hpPct > 25 ? '#f39c12' : '#e74c3c';
+        return `<span class="hud-party-member"><span class="hud-portrait-wrap">${portrait}</span><span class="hud-member-info"><span class="hud-member-name">${m.name}</span><span class="hud-hp-bar"><span class="hud-hp-fill" style="width:${hpPct}%;background:${hpColor}"></span></span><span class="hud-hp-text">${m.hp}/${m.maxHp || '?'}</span></span></span>`;
+      }).join('');
+    }
   }
 
   // ─── EXPLORE MODE ───────────────────────────────────────────────────

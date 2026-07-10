@@ -1416,6 +1416,7 @@ export class BattleUI {
     }).join('');
 
     screen.innerHTML = `
+      <div class="go-bg" style="background:url('sprites/ui/victory_bg.png') center/cover no-repeat"></div>
       <div class="btl-victory-inner">
         <div class="vic-title-group">
           <h1 class="vic-title">⚔ VICTOIRE ⚔</h1>

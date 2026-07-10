@@ -90,10 +90,16 @@ function sliceSheet(atlas, names) {
 const BATTLE_BG_MAP = {
   forest: 'bg.darkforest', darkforest: 'bg.darkforest',
   desert: 'bg.desertland',
-  palace: 'bg.cityoflove', castle: 'bg.cityoflove',
-  steampunk: 'bg.steamtownmachina', void: 'bg.steamtownmachina',
+  palace: 'bg.palace', castle: 'bg.palace',
+  steampunk: 'bg.steamtownmachina',
   town_steampunk: 'bg.steamtownmachina',
-  crystal_world: 'bg.cityoflove',
+  void: 'bg.void',
+  crystal_world: 'bg.crystal_world',
+  cave: 'bg.cave',
+  town_lindblum: 'bg.town_lindblum',
+  town: 'bg.town_lindblum',
+  magic_tree: 'bg.magic_tree',
+  cityoflove: 'bg.cityoflove',
 };
 
 export async function loadGameAssets() {
@@ -105,6 +111,12 @@ export async function loadGameAssets() {
     ['bg.desertland',       'backgrounds/desertland.png'],
     ['bg.steamtownmachina', 'backgrounds/steamtownmachina.png'],
     ['bg.cityoflove',       'backgrounds/cityoflove.png'],
+    ['bg.cave',             'backgrounds/cave.png'],
+    ['bg.town_lindblum',    'backgrounds/town_lindblum.png'],
+    ['bg.magic_tree',       'backgrounds/magic_tree.png'],
+    ['bg.palace',           'backgrounds/palace.png'],
+    ['bg.crystal_world',    'backgrounds/crystal_world.png'],
+    ['bg.void',             'backgrounds/void.png'],
     // Hero sprite sheets (may fail if not 4x2 sheets — we have singles as fallback)
     ['hero.luan',   'sprites/heroes/luan.png'],
     ['hero.aldric', 'sprites/heroes/aldric.png'],
