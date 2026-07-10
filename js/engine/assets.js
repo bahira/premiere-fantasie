@@ -8,6 +8,37 @@ const _loading = {};
 // Sliced animation frames (4 cols x 2 rows = 8 frames per hero sheet)
 const HERO_FRAMES = {};   // { luan: [c0..c7], aldric: [...], ... }
 const ENEMY_TYPES = {};   // { goblin: canvas, fuse: canvas, ... } — single frame per type
+const SINGLE_SPRITES = {}; // { filename: Image } — loaded single-frame sprites for heroes/enemies
+
+// hero id -> single sprite filename
+const HERO_SPRITE_MAP = {
+  zidane: 'thief_sprite.png',
+  luan: 'thief_sprite.png',
+  knight: 'knight_sprite.png',
+  aldric: 'knight_sprite.png',
+  mage: 'mage_sprite.png',
+  mira: 'mage_sprite.png',
+  healer: 'healer_sprite.png',
+  selia: 'healer_sprite.png',
+};
+
+// enemy model -> single sprite filename
+const ENEMY_SPRITE_MAP = {
+  goblin: 'goblin.png', fuse: 'fuse.png', skeleton: 'skeleton.png',
+  bomb: 'bomb.png', loup: 'loup.png', araignee: 'araignee.png',
+  champignon: 'champignon.png', dryad: 'dryad.png', ironite: 'ironite.png',
+  chauve_souris_geante: 'chauve_souris_geante.png', golem_terre: 'golem_terre.png',
+  mimic: 'mimic.png', vautour: 'vautour.png', scorpion: 'scorpion.png',
+  djinn: 'djinn.png', fantome: 'fantome.png', gargoyyle: 'gargoyyle.png',
+  dragon_rouge: 'dragon_rouge.png', construct_mana: 'construct_mana.png',
+  ombre_ancienne: 'ombre_ancienne.png',
+  boss_plant: 'boss_plant.png',
+  boss_steiner_dark: 'boss_steiner_dark.png',
+  boss_kuja_echo: 'boss_kuja_echo.png',
+  plant: 'boss_plant.png',
+  darkknight: 'boss_steiner_dark.png',
+  kuja: 'boss_kuja_echo.png',
+};
 
 // anim -> sheet cell index (4x2 grid: idx = row*4 + col) — used ONLY for hero sheets
 export const ANIM_FRAME = {
@@ -68,12 +99,13 @@ const BATTLE_BG_MAP = {
 export async function loadGameAssets() {
   console.log('[Assets] Loading game assets...');
 
-  // Load ALL images in parallel (backgrounds + hero sheets + enemy atlas)
+  // Load ALL images in parallel (backgrounds + hero sheets + enemy atlas + single sprites)
   const allEntries = [
     ['bg.darkforest',       'backgrounds/darkforest.png'],
     ['bg.desertland',       'backgrounds/desertland.png'],
     ['bg.steamtownmachina', 'backgrounds/steamtownmachina.png'],
     ['bg.cityoflove',       'backgrounds/cityoflove.png'],
+    // Hero sprite sheets (may fail if not 4x2 sheets — we have singles as fallback)
     ['hero.luan',   'sprites/heroes/luan.png'],
     ['hero.aldric', 'sprites/heroes/aldric.png'],
     ['hero.mira',   'sprites/heroes/mira.png'],
@@ -82,7 +114,7 @@ export async function loadGameAssets() {
   ];
   await Promise.all(allEntries.map(([k, u]) => loadImage(k, u)));
 
-  // Slice hero sheets (4x2 = 8 animation frames each)
+  // Slice hero sheets (4x2 = 8 animation frames each) — fallback to single sprites
   const heroIds = [['luan','hero.luan'],['aldric','hero.aldric'],['mira','hero.mira'],['selia','hero.selia']];
   for (const [id, key] of heroIds) {
     const img = _cache[key];
@@ -96,6 +128,24 @@ export async function loadGameAssets() {
     Object.assign(ENEMY_TYPES, sliced);
   }
 
+  // Load single-frame sprites for heroes and enemies (new AI-generated assets)
+  const singleEntries = [];
+  for (const [id, fname] of Object.entries(HERO_SPRITE_MAP)) {
+    const key = `sprite.hero.${fname}`;
+    if (!_cache[key]) singleEntries.push([key, `sprites/heroes/${fname}`]);
+  }
+  for (const [model, fname] of Object.entries(ENEMY_SPRITE_MAP)) {
+    const key = `sprite.enemy.${fname}`;
+    if (!_cache[key]) singleEntries.push([key, `sprites/enemies/${fname}`]);
+  }
+  await Promise.all(singleEntries.map(([k, u]) => loadImage(k, u)));
+
+  // Index single sprites into ENEMY_TYPES (overwrite if loaded)
+  for (const [model, fname] of Object.entries(ENEMY_SPRITE_MAP)) {
+    const key = `sprite.enemy.${fname}`;
+    if (_cache[key]) ENEMY_TYPES[model] = _cache[key];
+  }
+
   const loaded = Object.keys(_cache).filter(k => _cache[k] !== null).length;
   const total = Object.keys(_cache).length;
   console.log(`[Assets] ${loaded}/${total} image assets loaded`);
@@ -106,12 +156,20 @@ export async function loadGameAssets() {
 /** Get a hero animation frame canvas (8 frames per hero) */
 export function getHeroFrame(heroId, anim) {
   const frames = HERO_FRAMES[heroId];
-  if (!frames) return null;
-  const idx = ANIM_FRAME[anim] ?? 0;
-  return frames[idx] || frames[0] || null;
+  if (frames) {
+    const idx = ANIM_FRAME[anim] ?? 0;
+    return frames[idx] || frames[0] || null;
+  }
+  // Fallback: return single sprite image
+  const fname = HERO_SPRITE_MAP[heroId];
+  if (fname) {
+    const single = _cache[`sprite.hero.${fname}`];
+    if (single) return single;
+  }
+  return null;
 }
 
-/** Get an enemy type canvas (single static frame per enemy type — NOT animated) */
+/** Get an enemy type canvas or Image (single static frame per enemy type) */
 export function getEnemyFrame(model) {
   return ENEMY_TYPES[model] || null;
 }

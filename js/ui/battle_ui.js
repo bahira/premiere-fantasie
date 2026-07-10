@@ -791,11 +791,11 @@ export class BattleUI {
     el.innerHTML = `
       <div class="btl-cmd-title">${m.name} — Action</div>
       <div class="btl-cmd-grid">
-        <button data-c="attack">Attaque</button>
-        <button data-c="skill">Capacités</button>
-        <button data-c="item">Objets</button>
-        <button data-c="defend">Garde</button>
-        <button data-c="flee" ${this.battle.canFlee?'':'disabled'}>Fuite</button>
+        <button data-c="attack"><img src="sprites/ui/icon_attack.png" class="btl-cmd-icon" alt="">Attaque</button>
+        <button data-c="skill"><img src="sprites/ui/icon_skill.png" class="btl-cmd-icon" alt="">Capacités</button>
+        <button data-c="item"><img src="sprites/ui/icon_item.png" class="btl-cmd-icon" alt="">Objets</button>
+        <button data-c="defend"><img src="sprites/ui/icon_defend.png" class="btl-cmd-icon" alt="">Garde</button>
+        <button data-c="flee" ${this.battle.canFlee?'':'disabled'}><img src="sprites/ui/icon_flee.png" class="btl-cmd-icon" alt="">Fuite</button>
         <button data-c="menu">Menu</button>
         ${dragonSk ? `<button data-c="dragon" class="btl-btn-dragon">🐉 ${dragonSk.name}</button>` : ''}
       </div>
