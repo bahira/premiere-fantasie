@@ -192,6 +192,13 @@ export const ENEMIES = {
     drops: [{ item: 'mythril_dagger', chance: 1.0 }, { item: 'elisir', chance: 0.5 }],
     color: 0x27ae60, model: 'plant',
   },
+  darkknight: {
+    name: 'Sentinelle des Ombres', hp: 350, mp: 20, str: 28, mag: 10, vit: 22, spd: 14,
+    exp: 200, ap: 6, gil: 150,
+    element_weak: ['holy'], element_resist: ['dark'],
+    attacks: ['coup', 'power_break_used'],
+    color: 0x2c3e50, model: 'darkknight',
+  },
   boss_steiner_dark: {
     name: 'Chevalier Noir', hp: 1000, mp: 40, str: 36, mag: 12, vit: 26, spd: 18,
     exp: 700, ap: 18, gil: 800, isBoss: true,

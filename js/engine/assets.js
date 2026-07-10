@@ -88,7 +88,7 @@ function sliceSheet(atlas, names) {
 
 /** Background image map for battle biomes (static const — no per-call allocation) */
 const BATTLE_BG_MAP = {
-  forest: 'bg.darkforest', darkforest: 'bg.darkforest',
+  forest: 'bg.forest', darkforest: 'bg.darkforest',
   desert: 'bg.desertland',
   palace: 'bg.palace', castle: 'bg.palace',
   steampunk: 'bg.steamtownmachina',
@@ -100,6 +100,7 @@ const BATTLE_BG_MAP = {
   town: 'bg.town_lindblum',
   magic_tree: 'bg.magic_tree',
   cityoflove: 'bg.cityoflove',
+  ending: 'bg.ending',
 };
 
 export async function loadGameAssets() {
@@ -107,7 +108,9 @@ export async function loadGameAssets() {
 
   // Load ALL images in parallel (backgrounds + hero sheets + enemy atlas + single sprites)
   const allEntries = [
+    ['bg.forest',           'backgrounds/forest.png'],
     ['bg.darkforest',       'backgrounds/darkforest.png'],
+    ['bg.ending',           'backgrounds/ending.png'],
     ['bg.desertland',       'backgrounds/desertland.png'],
     ['bg.steamtownmachina', 'backgrounds/steamtownmachina.png'],
     ['bg.cityoflove',       'backgrounds/cityoflove.png'],

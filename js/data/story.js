@@ -86,8 +86,9 @@ export const STORY = {
         bounds: { top: 20, bottom: 430, left: 20, right: 580 },
         encounterZones: [
           { x: 50, y: 30, w: 200, h: 180, enemies: ['skeleton'], rate: 0.06, stepThreshold: 10, expReward: 60, apReward: 2, gilReward: 20 },
-          { x: 300, y: 60, w: 200, h: 170, enemies: ['bomb'], rate: 0.07, stepThreshold: 12, expReward: 70, apReward: 2, gilReward: 25 },
+          { x: 300, y: 60, w: 200, h: 170, enemies: ['bomb','mimic'], rate: 0.07, stepThreshold: 12, expReward: 70, apReward: 2, gilReward: 25 },
           { x: 150, y: 250, w: 250, h: 150, enemies: ['skeleton','bomb'], rate: 0.05, stepThreshold: 15, expReward: 100, apReward: 3, gilReward: 30 },
+          { x: 400, y: 280, w: 140, h: 120, enemies: ['fantome'], rate: 0.04, stepThreshold: 14, expReward: 130, apReward: 4, gilReward: 35 },
           { x: 460, y: 360, w: 110, h: 70, enemies: ['darkknight'], rate: 0.015, stepThreshold: 6, expReward: 500, apReward: 12, gilReward: 200, isBoss: true },
         ],
         pois: [
@@ -155,8 +156,10 @@ export const STORY = {
         startX: 80, startY: 300, width: 600, height: 500,
         bounds: { top: 30, bottom: 470, left: 20, right: 580 },
         encounterZones: [
-          { x: 30, y: 30, w: 250, h: 200, enemies: ['ironite'], rate: 0.05, stepThreshold: 12, expReward: 90, apReward: 3, gilReward: 30 },
-          { x: 250, y: 250, w: 200, h: 180, enemies: ['ironite','ironite'], rate: 0.06, stepThreshold: 15, expReward: 120, apReward: 4, gilReward: 35 },
+          { x: 30, y: 30, w: 250, h: 200, enemies: ['loup'], rate: 0.06, stepThreshold: 11, expReward: 80, apReward: 2, gilReward: 28 },
+          { x: 250, y: 250, w: 200, h: 180, enemies: ['araignee','champignon'], rate: 0.06, stepThreshold: 13, expReward: 100, apReward: 3, gilReward: 32 },
+          { x: 120, y: 380, w: 180, h: 120, enemies: ['loup','loup'], rate: 0.05, stepThreshold: 14, expReward: 110, apReward: 4, gilReward: 35 },
+          { x: 450, y: 180, w: 120, h: 120, enemies: ['dryad'], rate: 0.04, stepThreshold: 16, expReward: 140, apReward: 5, gilReward: 40 },
         ],
         pois: [
           { x: 500, y: 100, label: 'Clairière', icon: '✨', type: 'advance', action: 'Entrer dans la clairière' },
@@ -224,9 +227,10 @@ export const STORY = {
         startX: 60, startY: 400, width: 700, height: 500,
         bounds: { top: 20, bottom: 480, left: 15, right: 685 },
         encounterZones: [
-          { x: 30, y: 30, w: 300, h: 200, enemies: ['ironite','goblin'], rate: 0.06, stepThreshold: 12, expReward: 120, apReward: 4, gilReward: 30 },
-          { x: 350, y: 180, w: 200, h: 180, enemies: ['ironite','skeleton'], rate: 0.07, stepThreshold: 14, expReward: 150, apReward: 5, gilReward: 35 },
-          { x: 80, y: 320, w: 150, h: 130, enemies: ['goblin','goblin','fuse'], rate: 0.05, stepThreshold: 16, expReward: 100, apReward: 3, gilReward: 25 },
+          { x: 30, y: 30, w: 300, h: 200, enemies: ['scorpion'], rate: 0.06, stepThreshold: 12, expReward: 130, apReward: 4, gilReward: 35 },
+          { x: 350, y: 180, w: 200, h: 180, enemies: ['djinn'], rate: 0.07, stepThreshold: 14, expReward: 160, apReward: 6, gilReward: 40 },
+          { x: 80, y: 320, w: 150, h: 130, enemies: ['vautour','vautour'], rate: 0.05, stepThreshold: 16, expReward: 120, apReward: 4, gilReward: 30 },
+          { x: 520, y: 300, w: 130, h: 130, enemies: ['scorpion','djinn'], rate: 0.04, stepThreshold: 18, expReward: 200, apReward: 7, gilReward: 50 },
         ],
         pois: [
           { x: 620, y: 80, label: 'Temple', icon: '🏛️', type: 'advance', action: 'Entrer dans le temple' },
@@ -272,6 +276,42 @@ export const STORY = {
         { speaker: "Luan", text: "Et on va couper la source. ENSEMBLE." },
       ],
       battle: { enemies: ["fuse","skeleton","bomb"], apReward: 10, expReward: 320 },
+      map: {
+        startX: 80, startY: 420, width: 650, height: 480,
+        bounds: { top: 20, bottom: 460, left: 20, right: 630 },
+        encounterZones: [
+          { x: 40, y: 40, w: 220, h: 180, enemies: ['champignon','dryad'], rate: 0.06, stepThreshold: 12, expReward: 140, apReward: 4, gilReward: 35 },
+          { x: 300, y: 80, w: 200, h: 180, enemies: ['construct_mana'], rate: 0.05, stepThreshold: 14, expReward: 180, apReward: 6, gilReward: 45 },
+          { x: 120, y: 260, w: 240, h: 160, enemies: ['ombre_ancienne','dryad'], rate: 0.04, stepThreshold: 16, expReward: 200, apReward: 7, gilReward: 50 },
+          { x: 440, y: 300, w: 150, h: 120, enemies: ['construct_mana','ombre_ancienne'], rate: 0.03, stepThreshold: 18, expReward: 280, apReward: 9, gilReward: 65 },
+        ],
+        pois: [
+          { x: 560, y: 60, label: 'Sommet', icon: '🌳', type: 'advance', action: 'Monter au sommet' },
+          { x: 60, y: 60, label: 'Camp de brume', icon: '🏕️', type: 'rest', action: 'Se reposer' },
+          { x: 340, y: 420, label: 'Sauvegarde', icon: '💾', type: 'save', action: 'Sauvegarder' },
+          { x: 60, y: 420, label: 'Coffre Ancestral', icon: '📦', type: 'chest', action: 'Ouvrir', contents: { item: { id: 'elixir', count: 1 } } },
+          { x: 560, y: 420, label: 'Coffre', icon: '📦', type: 'chest', action: 'Ouvrir', contents: { gold: 600 } },
+        ],
+        npcs: [
+          { id: 'tree_guardian', name: 'Gardien de Iifa', role: 'elder', x: 320, y: 180, radius: 50,
+            lines: [
+              "L'Arbre Iifa fut le berceau du monde. Quelqu'un l'a empoisonné de brume.",
+              "Mira... je te reconnais. Tu es l'enfant de l'Arbre. Son cœur te bat encore.",
+              "Montez. Le sommet révélera la vérité que Kuja cache depuis toujours."
+            ],
+            questgiver: true,
+            questIntro: "Enfants de la brume... Si vous trouvez le cristal de sève au cœur de l'arbre, il purifiera les racines. Revenez vers moi.",
+            questReward: { gold: 700, item: { id: 'elixir', count: 1 } }
+          },
+          { id: 'mystic_bloom', name: 'Fleur Mystique', role: 'sage', x: 500, y: 240, radius: 40,
+            lines: [
+              "Chaque pétale contient un souvenir. Celui-ci est le premier rire de Mira.",
+              "La brume n'est pas le mal. L'intention derrière l'est.",
+              "Kuja voulait créer une arme. L'Arbre a donné un cœur."
+            ]
+          }
+        ],
+      },
       objective: "Atteindre le sommet de l'arbre et identifier la source.",
     },
     {
@@ -282,6 +322,20 @@ export const STORY = {
         { speaker: "Aldric", text: "Je choisis l'honneur. De mon epee, je te juge !" },
       ],
       battle: { enemies: ["boss_steiner_dark"], apReward: 18, expReward: 700, isBossFight: true, reward: { item: "saves_the_queen" } },
+      map: {
+        startX: 340, startY: 400, width: 620, height: 460,
+        bounds: { top: 20, bottom: 440, left: 20, right: 600 },
+        encounterZones: [
+          { x: 50, y: 30, w: 200, h: 180, enemies: ['ombre_ancienne','construct_mana'], rate: 0.04, stepThreshold: 14, expReward: 240, apReward: 8, gilReward: 60 },
+          { x: 350, y: 60, w: 200, h: 180, enemies: ['gargoyyle','ombre_ancienne'], rate: 0.03, stepThreshold: 16, expReward: 300, apReward: 10, gilReward: 75 },
+        ],
+        pois: [
+          { x: 560, y: 60, label: 'Arène du Chevalier', icon: '⚔️', type: 'advance', action: 'Affronter le Chevalier Noir' },
+          { x: 60, y: 80, label: 'Refuge', icon: '🏕️', type: 'rest', action: 'Se reposer' },
+          { x: 300, y: 400, label: 'Sauvegarde', icon: '💾', type: 'save', action: 'Sauvegarder' },
+          { x: 60, y: 400, label: 'Coffre du Chevalier', icon: '📦', type: 'chest', action: 'Ouvrir', contents: { item: { id: 'elixir', count: 1 } } },
+        ],
+      },
       cutsceneAfter: { speaker: "Aldric", text: "Adieu, mon frere d'armes. Que ta brume enfin se dissipe." },
       objective: "Vaincre le Chevalier Noir pour de bon.",
     },
@@ -299,8 +353,9 @@ export const STORY = {
         startX: 50, startY: 400, width: 700, height: 500,
         bounds: { top: 20, bottom: 480, left: 15, right: 685 },
         encounterZones: [
-          { x: 30, y: 20, w: 300, h: 200, enemies: ['ironite','goblin'], rate: 0.06, stepThreshold: 10, expReward: 160, apReward: 5, gilReward: 40 },
-          { x: 380, y: 160, w: 200, h: 200, enemies: ['skeleton','bomb'], rate: 0.07, stepThreshold: 12, expReward: 200, apReward: 6, gilReward: 50 },
+          { x: 30, y: 20, w: 300, h: 200, enemies: ['scorpion','djinn'], rate: 0.06, stepThreshold: 12, expReward: 180, apReward: 6, gilReward: 45 },
+          { x: 380, y: 160, w: 200, h: 200, enemies: ['vautour','vautour','djinn'], rate: 0.07, stepThreshold: 14, expReward: 220, apReward: 7, gilReward: 55 },
+          { x: 200, y: 350, w: 180, h: 130, enemies: ['scorpion','scorpion'], rate: 0.05, stepThreshold: 16, expReward: 260, apReward: 8, gilReward: 60 },
         ],
         pois: [
           { x: 630, y: 80, label: 'Portail', icon: '🌀', type: 'advance', action: 'Affronter Kuja' },
@@ -343,6 +398,42 @@ export const STORY = {
         { speaker: "Luan", text: "Ce pouvoir... on va pas se laisser faire par Kuja." },
       ],
       battle: { enemies: ["ironite","ironite","skeleton"], apReward: 20, expReward: 800 },
+      map: {
+        startX: 340, startY: 420, width: 680, height: 500,
+        bounds: { top: 20, bottom: 480, left: 20, right: 660 },
+        encounterZones: [
+          { x: 40, y: 30, w: 250, h: 200, enemies: ['fantome','djinn'], rate: 0.06, stepThreshold: 14, expReward: 220, apReward: 7, gilReward: 55 },
+          { x: 350, y: 60, w: 220, h: 180, enemies: ['gargoyyle'], rate: 0.05, stepThreshold: 16, expReward: 260, apReward: 8, gilReward: 60 },
+          { x: 80, y: 280, w: 200, h: 150, enemies: ['fantome','fantome'], rate: 0.04, stepThreshold: 18, expReward: 300, apReward: 9, gilReward: 70 },
+          { x: 440, y: 300, w: 160, h: 140, enemies: ['djinn','gargoyyle'], rate: 0.03, stepThreshold: 20, expReward: 350, apReward: 10, gilReward: 80 },
+        ],
+        pois: [
+          { x: 600, y: 60, label: 'Trône Royal', icon: '👑', type: 'advance', action: 'Entrer dans la salle du trône' },
+          { x: 80, y: 80, label: 'Autel de Lumière', icon: '✨', type: 'rest', action: 'Se reposer' },
+          { x: 340, y: 420, label: 'Sauvegarde', icon: '💾', type: 'save', action: 'Sauvegarder' },
+          { x: 60, y: 440, label: 'Coffre Royal', icon: '📦', type: 'chest', action: 'Ouvrir', contents: { item: { id: 'elixir', count: 2 } } },
+          { x: 580, y: 440, label: 'Trésor Caché', icon: '📦', type: 'chest', action: 'Ouvrir', contents: { gold: 1000 } },
+        ],
+        npcs: [
+          { id: 'palace_sentinel', name: 'Sentinelle du Palais', role: 'guard', x: 200, y: 160, radius: 50,
+            lines: [
+              "Nul ne passe sans l'aveu du Roi. Mais la raison est morte avec la Brume.",
+              "Le palais est hanté par les souvenirs d'un temps oublié.",
+              "Selia... la princesse ? Vous êtes revenue ? Le Roi attendait."
+            ]
+          },
+          { id: 'ghost_advisor', name: 'Ancien Conseiller', role: 'elder', x: 500, y: 200, radius: 45,
+            lines: [
+              "Je suis l'ombre d'un homme qui servait le Roi avant la Brume.",
+              "Raziel dort sous le trône. Réveillez-le et le monde retrouvera sa lumière.",
+              "Kuja a volé la Couronne du Cristal. Sans elle, Raziel ne se réveillera pas."
+            ],
+            questgiver: true,
+            questIntro: "Princesse... Si vous trouvez les trois éclats de Raziel cachés dans les salles du palais, l'Esprit se réveillera. Je vous en supplie.",
+            questReward: { gold: 900, item: { id: 'elixir', count: 1 } }
+          }
+        ],
+      },
       cutsceneAfter: { speaker: "Selia", text: "Raziel repond. La fin approche. On va le retrouver." },
       objective: "Reveiller l'Esprit final.",
     },
