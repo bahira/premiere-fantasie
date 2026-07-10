@@ -129,7 +129,19 @@ export class GameMenu {
     const s = document.getElementById('mm-stats');
     if (m) {
       const CHAR = getChar(m.id);
-      p.textContent = CHAR.portrait;
+      // Portrait image
+      const portraitMap = { zidane: 'sprites/portraits/luan.png', knight: 'sprites/portraits/aldric.png', mage: 'sprites/portraits/mira.png', healer: 'sprites/portraits/selia.png' };
+      const pSrc = portraitMap[m.id];
+      if (pSrc) {
+        if (!p.querySelector('img')) {
+          const img = document.createElement('img');
+          img.src = pSrc; img.alt = m.name;
+          img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+          p.innerHTML = ''; p.appendChild(img);
+        }
+      } else {
+        p.textContent = CHAR.portrait;
+      }
       n.textContent = m.name + (GAME.party.length > 1 ? '  ◂▸' : '');
       c.textContent = CHAR.class + ' · Niv.' + m.level;
 

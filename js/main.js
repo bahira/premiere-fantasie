@@ -9,7 +9,38 @@ import { loadGameAssets } from './engine/assets.js';
 
 let titleScene, fieldScene;
 
+// Loading screen animation
+function animateLoading() {
+  const bar = document.getElementById('loading-bar');
+  const screen = document.getElementById('loading-screen');
+  if (!bar || !screen) return Promise.resolve();
+  
+  return new Promise(resolve => {
+    let progress = 0;
+    const steps = [15, 35, 55, 72, 88, 100];
+    let i = 0;
+    const tick = () => {
+      if (i < steps.length) {
+        progress = steps[i];
+        bar.style.width = progress + '%';
+        i++;
+        setTimeout(tick, 300 + Math.random() * 200);
+      } else {
+        bar.classList.add('complete');
+        setTimeout(() => {
+          screen.classList.add('fade-out');
+          setTimeout(resolve, 800);
+        }, 500);
+      }
+    };
+    setTimeout(tick, 400);
+  });
+}
+
 async function boot() {
+  // Animate loading screen
+  await animateLoading();
+  
   // Initialize WASM particle system (non-blocking)
   initParticlePool().catch(() => {});
   

@@ -758,12 +758,23 @@ export class BattleUI {
       </div>`;
     }).join('');
   }
+  // Portrait mapping for battle UI
+  static BTL_PORTRAITS = {
+    zidane: 'sprites/portraits/luan.png',
+    knight: 'sprites/portraits/aldric.png',
+    mage: 'sprites/portraits/mira.png',
+    healer: 'sprites/portraits/selia.png',
+  };
+
   _renderParty() {
     const el = document.getElementById('btl-party'); if (!el) return;
     el.innerHTML = this.battle.party.map((m, i) => {
       const at = Math.min(100, m.atb || 0);
       const isTarget = this.phase === 'target' && this._targetSide === 'ally' && this.targetIdx === i;
+      const portraitSrc = BattleUI.BTL_PORTRAITS[m.id] || '';
+      const portraitHtml = portraitSrc ? `<img src="${portraitSrc}" alt="${m.name}" class="btl-member-portrait">` : '';
       return `<div class="btl-member ${m.alive?'':'dead'} ${this.battle.activeUnit===m?'active':''} ${isTarget?'tgt':''}">
+        ${portraitHtml}
         <div class="btl-char">${m.name}</div>
         <div class="btl-mhp">HP ${m.hp}/${m.maxHp}</div>
         <div class="btl-mmp">PM ${m.mp}/${m.maxMp}</div>

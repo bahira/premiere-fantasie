@@ -136,14 +136,47 @@ export class Dialogue {
     this._next();
   }
 
+  // Portrait image mapping (name -> sprites/portraits/*.png)
+  static PORTRAIT_MAP = {
+    'Luan': 'sprites/portraits/luan.png',
+    'Sir Aldric': 'sprites/portraits/aldric.png',
+    'Aldric': 'sprites/portraits/aldric.png',
+    'Mira': 'sprites/portraits/mira.png',
+    'Selia': 'sprites/portraits/selia.png',
+    'Voix': null,
+    '???': null,
+  };
+
   _drawPortrait(container, key) {
     if (!container) return;
+    // Try real portrait image first
+    const imgSrc = Dialogue.PORTRAIT_MAP[key];
+    let img = container.querySelector('img');
     let cv = container.querySelector('canvas');
+    if (imgSrc) {
+      if (!img) {
+        img = document.createElement('img');
+        img.width = 100; img.height = 100;
+        container.innerHTML = '';
+        container.appendChild(img);
+      }
+      if (img.src !== new URL(imgSrc, location.href).href) {
+        img.src = imgSrc;
+        img.alt = key;
+        img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:12px;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.5));animation:dlgPortraitIn .3s var(--ease) both;';
+      }
+      // Hide canvas if present
+      if (cv) cv.style.display = 'none';
+      return;
+    }
+    // Fallback: procedural canvas portrait
+    if (img) { img.style.display = 'none'; }
     if (!cv) {
       cv = document.createElement('canvas');
       cv.width = 90; cv.height = 90;
       container.appendChild(cv);
     }
+    cv.style.display = '';
     const ctx = cv.getContext('2d');
     ctx.clearRect(0, 0, 90, 90);
     // Resolve palette by key (speaker name or role)
