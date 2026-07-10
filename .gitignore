@@ -1,0 +1,22 @@
+# ── Large binaries (keep repo light) ──────────────────────────
+music/
+backgrounds/*.png
+sprites/enemies/*.png
+sprites/heroes/*.png
+wasm/*.wasm
+wasm/*.js
+wasm_core/target/
+wasm_core/pkg/
+
+# ── Logs & temp ──────────────────────────────────────────────
+*.log
+server.log
+server_err.log
+helix_state.json
+
+# ── OS / IDE ─────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/
+__pycache__/
+*.pyc
