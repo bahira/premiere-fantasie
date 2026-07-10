@@ -125,7 +125,7 @@ export async function loadGameAssets() {
     ['hero.aldric', 'sprites/heroes/aldric.png'],
     ['hero.mira',   'sprites/heroes/mira.png'],
     ['hero.selia',  'sprites/heroes/selia.png'],
-    ['enemies.basic', 'sprites/enemies/basic_enemies.png'],
+    // Enemy atlas removed — using individual sprites via ENEMY_SPRITE_MAP
   ];
   await Promise.all(allEntries.map(([k, u]) => loadImage(k, u)));
 
