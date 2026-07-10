@@ -6,8 +6,22 @@ import { FieldScene } from './scenes/field.js';
 import { dialogue } from './engine/dialogue.js';
 import { initParticlePool } from './renderer/wasm_particles.js';
 import { loadGameAssets } from './engine/assets.js';
+import { battleUI } from './ui/battle_ui.js';
+import { canvas } from './renderer/canvas.js';
+import { juice } from './engine/juice.js';
+import { ambiance } from './engine/ambiance.js';
+import { quests } from './engine/quests.js';
+import { ColosseumScene } from './scenes/colosseum.js';
+import { TownScene } from './scenes/town.js';
+import { CardGame } from './minigames/cardgame.js';
+import { RacingGame } from './minigames/racing.js';
+import { FishingGame } from './minigames/fishing.js';
+import { COLISSEUM_CUPS } from './data/colosseum_cups.js';
+import { SIDE_QUESTS } from './data/sidequests.js';
+import { TOWNS } from './data/towns.js';
 
 let titleScene, fieldScene;
+let colosseumScene, townScene, cardGame, racingGame, fishingGame;
 
 // Loading screen animation
 function animateLoading() {
@@ -40,13 +54,17 @@ function animateLoading() {
 async function boot() {
   // Animate loading screen
   await animateLoading();
-  
+
   // Initialize WASM particle system (non-blocking)
   initParticlePool().catch(() => {});
-  
+
   // Load game assets (images) — non-blocking
   loadGameAssets().catch(err => console.warn('[Assets] Load failed:', err));
-  
+
+  // Init engines
+  juice.reset();
+  ambiance.reset();
+
   // Idle title; music starts on first interaction (browser autoplay rules)
   titleScene = new TitleScene(go);
   titleScene.show();
@@ -56,7 +74,53 @@ async function boot() {
       import('./ui/menu.js').then(m => m.menu.open());
     }
   });
+  // Quick-access shortcuts (field mode)
+  window.addEventListener('keydown', (e) => {
+    if (GAME.scene !== 'field') return;
+    if (e.code === 'KeyC') openColosseum();
+    else if (e.code === 'KeyQ') openQuests();
+    else if (e.code === 'KeyT') openTown();
+    else if (e.code === 'KeyG') openCardGame();
+  });
   console.log('[FF] Première Fantasie loaded — FFIX-style runtime');
+}
+
+// ─── System launchers ────────────────────────────────────────────────
+function _resumeField() { if (fieldScene) fieldScene.show(); }
+
+function openColosseum() {
+  audio.sfx('confirm');
+  colosseumScene = new ColosseumScene(battleUI);
+  colosseumScene.show(_resumeField);
+}
+
+function openTown(townId = 'lindblum') {
+  audio.sfx('confirm');
+  townScene = new TownScene(canvas, null);
+  townScene.show(townId, _resumeField);
+}
+
+function openQuests() {
+  audio.sfx('confirm');
+  import('./ui/menu.js').then(m => { m.menu.open(); m.menu._panelQuests?.(); });
+}
+
+function openCardGame() {
+  audio.sfx('confirm');
+  cardGame = new CardGame();
+  cardGame.show(_resumeField);
+}
+
+function openRacing() {
+  audio.sfx('confirm');
+  racingGame = new RacingGame();
+  racingGame.show(_resumeField);
+}
+
+function openFishing() {
+  audio.sfx('confirm');
+  fishingGame = new FishingGame();
+  fishingGame.show(_resumeField);
 }
 
 async function go(target, opts = {}) {
@@ -70,5 +134,8 @@ async function go(target, opts = {}) {
     location.reload();
   }
 }
+
+// Expose launchers for menu.js
+window.__FF_LAUNCHERS__ = { openColosseum, openTown, openQuests, openCardGame, openRacing, openFishing };
 
 boot();

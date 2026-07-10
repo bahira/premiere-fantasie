@@ -75,7 +75,12 @@ export class GameMenu {
       { label: 'Classe',      icon: '🎭', action: () => this._panelJobs() },
       { label: 'Familier',    icon: '🐾', action: () => this._panelPets() },
       { label: 'Statut',      icon: '📊', action: () => this._panelStatus() },
+      { label: 'Quêtes',      icon: '📜', action: () => this._panelQuests() },
       { label: 'Bestiaire',   icon: '📖', action: () => this._panelBestiary() },
+      { label: 'Colisée',     icon: '🏟️', action: () => this._launch('openColosseum') },
+      { label: 'Cartes Brume',icon: '🃏', action: () => this._launch('openCardGame') },
+      { label: 'Course',      icon: '🏇', action: () => this._launch('openRacing') },
+      { label: 'Pêche',       icon: '🎣', action: () => this._launch('openFishing') },
       { label: 'Sauvegarder', icon: '💾', action: () => this._panelSave() },
       { label: 'Quitter',     icon: '🚪', action: () => this.close() },
     ];
@@ -577,6 +582,50 @@ export class GameMenu {
         this._renderDetail('🗑️ Sauvegarde effacée.');
       };
     }, 50);
+  }
+
+  // ─── Quests panel (active + completed) ─────────────────────────────
+  _panelQuests() {
+    this._subPanel = () => this._panelQuests();
+    const st = GAME.quests || { active: {}, completed: {} };
+    const active = Object.values(st.active || {});
+    const completed = Object.values(st.completed || {});
+    let html = '<b>📜 Quêtes</b><br>';
+    if (active.length === 0 && completed.length === 0) {
+      html += '<small>Aucune quête en cours.</small>';
+    } else {
+      if (active.length) {
+        html += '<div class="quest-sec">⚔️ En cours</div>';
+        for (const q of active) {
+          const def = SIDE_QUESTS[q.id] || {};
+          html += `<div class="quest-card"><div class="quest-title">${def.title || q.id}</div>`;
+          for (const o of (q.objectives || [])) {
+            const pct = o.goal ? Math.min(100, Math.floor((o.progress || 0) / o.goal * 100)) : (o.done ? 100 : 0);
+            html += `<div class="quest-obj"><span>${o.text}</span><span class="quest-pct">${pct}%</span></div>`;
+          }
+          html += '</div>';
+        }
+      }
+      if (completed.length) {
+        html += `<div class="quest-sec">✅ Terminées (${completed.length})</div>`;
+        for (const q of completed) {
+          const def = SIDE_QUESTS[q.id] || {};
+          html += `<div class="quest-done">${def.title || q.id}</div>`;
+        }
+      }
+    }
+    this._renderDetail(html);
+  }
+
+  // ─── Launch external systems (colosseum, minigames) ────────────────
+  _launch(fnName) {
+    const L = window.__FF_LAUNCHERS__;
+    if (L && typeof L[fnName] === 'function') {
+      this.close();
+      L[fnName]();
+    } else {
+      console.warn('[menu] launcher not ready:', fnName);
+    }
   }
 }
 

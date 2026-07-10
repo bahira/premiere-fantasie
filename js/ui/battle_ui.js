@@ -14,6 +14,9 @@ import { drawBattleBackground } from '../renderer/scenes.js';
 import { applyPostFX } from '../renderer/scenes.js';
 import { drawWeatherOverlay, getBiomeWeather } from '../renderer/scenes.js';
 import { FX } from '../renderer/effects.js';
+import { juice } from '../engine/juice.js';
+import { onBattleWin as _questBattleWin } from '../engine/quests.js';
+import { ambiance } from '../engine/ambiance.js';
 
 export class BattleUI {
   constructor() {
@@ -1043,6 +1046,20 @@ export class BattleUI {
         ux = this._battleCanvas.canvas.width * (0.15 + idx * 0.2);
         uy = this._battleCanvas.canvas.height * 0.75;
       }
+      // ── Juice: damage numbers, shake, hitstop, flash ──────────────
+      const isEnemyTarget = uid.isEnemy;
+      const dmgText = (ev.isCrit ? 'CRIT! ' : (ev.weaknessHit ? 'FAIBLE ' : '')) + '-' + ev.amount;
+      const dmgKind = ev.isCrit ? 'crit' : (ev.weaknessHit ? 'weakness' : 'damage');
+      juice.floater(ux, uy, dmgText, dmgKind);
+      juice.registerHit();
+      juice.shake(ev.isCrit ? 9 : (ev.weaknessHit ? 5 : 3));
+      juice.hitstop(ev.isCrit ? 5 : 2);
+      juice.flash(ev.isCrit ? 0.25 : 0.1, ev.element === 'fire' ? '255,120,40'
+        : ev.element === 'ice' ? '120,200,255'
+        : ev.element === 'thunder' ? '255,230,80'
+        : ev.element === 'dark' ? '150,60,200'
+        : ev.element === 'holy' ? '255,240,160'
+        : '255,255,255');
       // Enemy attack anim (from attacker)
       if (ev.attacker && ev.attacker.isEnemy && uid) {
         this._triggerCombatAnim(ev.attacker, uid, 'attack');
@@ -1380,6 +1397,10 @@ export class BattleUI {
         this._say('victory', victor);
       }
       // ─── PREMIUM VICTORY SCREEN ──────────────────────────────────────
+      // Quest hook: winning a battle can advance/fail quests
+      const enemyIds = (this.battle?.enemies || []).map(e => e.id);
+      _questBattleWin(enemyIds);
+      ambiance.onBattleEnd();
       this._showVictoryScreen(reports, reward);
     } else if (result === 'lose') {
       audio.sfx('ally_die');
@@ -1495,6 +1516,28 @@ export class BattleUI {
       this._close();
       if (this.onWin) this.onWin(reports, reward);
     };
+  }
+
+  // ─── Colosseum integration ─────────────────────────────────────────
+  // group: array of enemy ids (or enemy defs). Launches a standalone battle
+  // that returns to the colosseum on win/lose instead of the field flow.
+  startColosseumFight(group, onWin, onLose) {
+    if (!group || !group.length) { onLose && onLose(); return; }
+    // Build enemy runtime list
+    const enemies = group.map(e => {
+      const def = typeof e === 'string' ? getEnemy(e) : e;
+      return def;
+    }).filter(Boolean);
+    if (!enemies.length) { onLose && onLose(); return; }
+
+    GAME.prevScene = GAME.scene;
+    GAME.scene = 'battle';
+    this.onWin = () => { onWin && onWin(); };
+    this.onLose = () => { onLose && onLose(); };
+    this.start({
+      enemies,
+      isColosseum: true,
+    });
   }
 
   _close() {

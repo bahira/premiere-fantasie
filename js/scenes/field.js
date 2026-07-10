@@ -16,6 +16,8 @@ import { FieldMap } from '../engine/field_map.js';
 import { FX } from '../renderer/effects.js';
 import { keyboard } from '../engine/keyboard.js';
 import { ExploreThree } from '../renderer/three_explore.js';
+import { ambiance } from '../engine/ambiance.js';
+import { onPOI, talkToNPC, onBattleWin as _questBattleWin, onPickup } from '../engine/quests.js';
 
 export class FieldScene {
   constructor() {
@@ -273,6 +275,12 @@ export class FieldScene {
       this._explore3d.update(dt, { x: wp.x, y: wp.y, moveX: dir.moveX, moveY: dir.moveY });
     }
 
+    // ── Ambiance engine (weather, time-of-day, dynamic events) ───────
+    if (explore) {
+      ambiance.setBiome(biome);
+      ambiance.update(dt || 0.016);
+    }
+
     // ── Caches (recreated only on resize) ────────────────────────────────
     if (!this._bgCache || this._bgCacheW !== w || this._bgCacheH !== h) {
       this._bgCache = document.createElement('canvas');
@@ -364,6 +372,8 @@ export class FieldScene {
   }
 
   _handlePOI(poi) {
+    // Quest hook: entering a POI can advance/fail quests
+    onPOI(poi.id);
     if (poi.type === 'advance') {
       this._cleanupMap();
       const ch = currentChapter();
@@ -396,6 +406,8 @@ export class FieldScene {
 
   _handleNPC(npc) {
     if (!npc) return;
+    // Quest hook: talking to an NPC can advance quests
+    talkToNPC(npc.id);
     const talkCount = this.fieldMap?.getTalkCount(npc.id) || 0;
     // Pick dialogue line: quest intro first time, then normal lines
     let line;
