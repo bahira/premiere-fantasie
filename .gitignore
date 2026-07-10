@@ -1,8 +1,7 @@
 # ── Large binaries (keep repo light) ──────────────────────────
 music/
 backgrounds/*.png
-sprites/enemies/*.png
-sprites/heroes/*.png
+# sprites now tracked (AI-generated assets)
 wasm/*.wasm
 wasm/*.js
 wasm_core/target/
