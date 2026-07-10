@@ -1356,26 +1356,30 @@ export function drawEnemyImage(model, ctx, x, y, s = 1, frame = 0, opts = {}) {
   const th = cv.height * ENEMY_CELL_BASE * s;
   const footPad = th * 0.04;
 
-  ctx.save();
-  ctx.translate(x + hitShake + attackLunge, y + bob);
-  ctx.globalAlpha = alpha;
+  const dx = x + hitShake + attackLunge;
+  const dy = y + bob;
 
-  // Shadow
+  // Shadow (cheap ellipse, no save/restore)
   ctx.fillStyle = 'rgba(0,0,0,0.32)';
   ctx.beginPath();
-  ctx.ellipse(0, 4, tw * 0.3, th * 0.05, 0, 0, 6.2832);
+  ctx.ellipse(dx, dy + 4, tw * 0.3, th * 0.05, 0, 0, 6.2832);
   ctx.fill();
 
-  ctx.drawImage(cv, -tw / 2, -th + footPad, tw, th);
+  ctx.globalAlpha = alpha;
+  ctx.drawImage(cv, dx - tw / 2, dy - th + footPad, tw, th);
+  ctx.globalAlpha = 1;
 
   if (flash) {
+    ctx.save();
     ctx.globalCompositeOperation = 'source-atop';
     ctx.fillStyle = `rgba(255,255,255,${0.5 + 0.3 * fastSin(frame * 0.3)})`;
-    ctx.fillRect(-tw / 2, -th, tw, th);
-    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillRect(dx - tw / 2, dy - th, tw, th);
+    ctx.restore();
   }
-  if (anim === 'dying') ctx.globalAlpha = Math.max(0, alpha * (1 - frame / 30));
-
-  ctx.restore();
+  if (anim === 'dying') {
+    ctx.globalAlpha = Math.max(0, alpha * (1 - frame / 30));
+    ctx.drawImage(cv, dx - tw / 2, dy - th + footPad, tw, th);
+    ctx.globalAlpha = 1;
+  }
   return true;
 }

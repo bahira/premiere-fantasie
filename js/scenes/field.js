@@ -189,7 +189,13 @@ export class FieldScene {
   }
 
   _startExplore(ch) {
-    this._fieldLoop();
+    // Register on the canvas engine's single RAF loop (no separate RAF loop).
+    if (this._fieldCanvas && this._fieldCanvas._onTick) {
+      this._fieldTickFn = (dt, ctx) => this._fieldTick(ctx);
+      this._fieldCanvas._onTick(this._fieldTickFn);
+    } else {
+      this._fieldLoop();
+    }
   }
 
   // Build the Three.js low-poly character renderer (falls back to 2D circle
@@ -234,8 +240,14 @@ export class FieldScene {
 
   _fieldLoop() {
     if (GAME.scene !== 'field' || !this._fieldCanvas) return;
+    this._fieldTick(this._fieldCanvas.ctx);
+    requestAnimationFrame(() => this._fieldLoop());
+  }
+
+  // Tick callback registered on the canvas engine's unified RAF loop.
+  _fieldTick(ctx) {
+    if (GAME.scene !== 'field' || !this._fieldCanvas) return;
     this._frame = (this._frame || 0) + 1;
-    const ctx = this._fieldCanvas.ctx;
     const w = this._fieldCanvas.canvas.width;
     const h = this._fieldCanvas.canvas.height;
     const ch = currentChapter();
@@ -322,8 +334,6 @@ export class FieldScene {
 
     // 3D character renders on top of the 2D map (independent of cache dirty flag).
     if (this._explore3dOn && this._explore3d) this._explore3d.render();
-
-    requestAnimationFrame(() => this._fieldLoop());
   }
 
   _drawDayNightTint(ctx, w, h, frame) {

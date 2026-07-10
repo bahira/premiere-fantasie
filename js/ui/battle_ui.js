@@ -388,7 +388,15 @@ export class BattleUI {
     if (this.phase !== 'anim') this.battle.step(1 / 60);
     this._tickAnims();
     this._tickLighting();
-    this._drawBattle();
+    // Skip full redraw when idle: only redraw if any animation is active,
+    // ATB is progressing (enemies/party moving), or FX are pending.
+    const anyAnim = Object.values(this._charAnims).some(a => a.state !== 'idle');
+    const atbMoving = this.battle.enemies.some(e => e.alive && (e.atb || 0) < 100) ||
+                      this.battle.party.some(m => m.alive && (m.atb || 0) < 100);
+    const fxPending = this._lightningFlashes.length > 0 || this._elementTint;
+    if (anyAnim || atbMoving || fxPending || this._frame % 8 === 0) {
+      this._drawBattle();
+    }
   }
 
   _drawBattle() {

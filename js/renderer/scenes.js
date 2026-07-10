@@ -289,12 +289,12 @@ function initAmbient(type, W, H) {
 }
 
 export function drawAmbientParticles(ctx, W, H, frame, biome) {
-  ctx.save();
   const t = frame * 0.001;
-  // Forest: fireflies
+  // Forest: fireflies — batched into 2 paths (glow + core) to avoid per-particle state changes
   if (biome === 'forest' || biome === 'plains') {
     initAmbient('fireflies', W, H);
     const drops = _ambientParticles.fireflies.drops;
+    const glows = [], cores = [];
     for (const d of drops) {
       d.phase += d.phaseSpeed;
       d.x += fastSin(d.phase) * d.speed * 0.5 + d.drift * 0.3;
@@ -304,37 +304,46 @@ export function drawAmbientParticles(ctx, W, H, frame, biome) {
       if (d.y < -10) d.y = H + 10;
       if (d.y > H + 10) d.y = -10;
       const glow = d.opacity * (0.4 + 0.6 * fastSin(d.phase * 2));
-      // Outer glow
-      ctx.globalAlpha = glow * 0.3;
-      ctx.fillStyle = '#a0e060';
-      ctx.shadowColor = '#80c040'; ctx.shadowBlur = 12;
-      ctx.beginPath(); ctx.arc(d.x, d.y, d.size * 4, 0, Math.PI * 2); ctx.fill();
-      // Core
-      ctx.globalAlpha = glow;
-      ctx.fillStyle = '#d0ff80';
-      ctx.shadowBlur = 6;
-      ctx.beginPath(); ctx.arc(d.x, d.y, d.size, 0, Math.PI * 2); ctx.fill();
+      glows.push([d.x, d.y, d.size * 4, glow * 0.3]);
+      cores.push([d.x, d.y, d.size, glow]);
     }
-    ctx.shadowBlur = 0;
+    ctx.save();
+    ctx.fillStyle = '#a0e060';
+    ctx.beginPath();
+    for (const [x, y, r, a] of glows) { ctx.globalAlpha = a; ctx.moveTo(x + r, y); ctx.arc(x, y, r, 0, 6.2832); }
+    ctx.fill();
+    ctx.fillStyle = '#d0ff80';
+    ctx.beginPath();
+    for (const [x, y, r, a] of cores) { ctx.globalAlpha = a; ctx.moveTo(x + r, y); ctx.arc(x, y, r, 0, 6.2832); }
+    ctx.fill();
+    ctx.restore();
   }
-  // Desert: dust motes
+  // Desert: dust motes — single batched path
   if (biome === 'desert') {
     initAmbient('dust', W, H);
     const drops = _ambientParticles.dust.drops;
+    ctx.save();
+    ctx.fillStyle = '#d4a860';
+    ctx.beginPath();
     for (const d of drops) {
       d.x += d.speed * 0.8;
       d.y += fastSin(d.phase + t) * 0.5;
       d.phase += d.phaseSpeed;
       if (d.x > W + 10) { d.x = -10; d.y = Math.random() * H; }
       ctx.globalAlpha = d.opacity * 0.25;
-      ctx.fillStyle = '#d4a860';
-      ctx.beginPath(); ctx.arc(d.x, d.y, d.size, 0, Math.PI * 2); ctx.fill();
+      ctx.moveTo(d.x + d.size, d.y);
+      ctx.arc(d.x, d.y, d.size, 0, 6.2832);
     }
+    ctx.fill();
+    ctx.restore();
   }
-  // Cave / Crystal: mist wisps
+  // Cave / Crystal: mist wisps — single batched path
   if (biome === 'cave' || biome === 'crystal_world' || biome === 'void') {
     initAmbient('mist', W, H);
     const drops = _ambientParticles.mist.drops;
+    ctx.save();
+    ctx.fillStyle = biome === 'crystal_world' ? '#a0c0ff' : '#e0e8f0';
+    ctx.beginPath();
     for (const d of drops) {
       d.phase += d.phaseSpeed;
       d.x += fastSin(d.phase) * d.speed;
@@ -342,16 +351,19 @@ export function drawAmbientParticles(ctx, W, H, frame, biome) {
       if (d.y < -20) { d.y = H + 20; d.x = Math.random() * W; }
       const alpha = d.opacity * (0.15 + 0.1 * fastSin(d.phase));
       ctx.globalAlpha = alpha;
-      ctx.fillStyle = biome === 'crystal_world' ? '#a0c0ff' : '#e0e8f0';
-      ctx.beginPath();
-      ctx.ellipse(d.x, d.y, d.size * 4, d.size * 2, fastSin(d.phase) * 0.5, 0, Math.PI * 2);
-      ctx.fill();
+      const rx = d.size * 4, ry = d.size * 2, rot = fastSin(d.phase) * 0.5;
+      ctx.ellipse(d.x, d.y, rx, ry, rot, 0, 6.2832);
     }
+    ctx.fill();
+    ctx.restore();
   }
-  // Magic tree: pollen / spores
+  // Magic tree: pollen / spores — single batched path
   if (biome === 'magic_tree') {
     initAmbient('pollen', W, H);
     const drops = _ambientParticles.pollen.drops;
+    ctx.save();
+    ctx.fillStyle = '#f0d060';
+    ctx.beginPath();
     for (const d of drops) {
       d.phase += d.phaseSpeed;
       d.x += fastSin(d.phase) * d.speed * 0.4;
@@ -359,13 +371,12 @@ export function drawAmbientParticles(ctx, W, H, frame, biome) {
       if (d.y < -10) { d.y = H + 10; d.x = Math.random() * W; }
       const glow = d.opacity * (0.3 + 0.3 * fastSin(d.phase * 1.5));
       ctx.globalAlpha = glow;
-      ctx.fillStyle = '#f0d060';
-      ctx.shadowColor = '#f1c40f'; ctx.shadowBlur = 4;
-      ctx.beginPath(); ctx.arc(d.x, d.y, d.size, 0, Math.PI * 2); ctx.fill();
+      ctx.moveTo(d.x + d.size, d.y);
+      ctx.arc(d.x, d.y, d.size, 0, 6.2832);
     }
-    ctx.shadowBlur = 0;
+    ctx.fill();
+    ctx.restore();
   }
-  ctx.restore();
 }
 
 function drawFog(ctx, W, H, color, time = 0) {
@@ -1002,48 +1013,50 @@ export function applyPostFX(ctx, W, H, frame, opts = {}) {
     ctx.restore();
   }
 
-  // 2) Bloom: throttled to every 2 frames (18% scale copy is expensive)
-  if (bloom > 0 && (frame & 1) === 0) {
+  // 2) Bloom: throttled to every 4 frames (18% scale copy is expensive)
+  //    Reuses a single scratch canvas sized once per resolution.
+  if (bloom > 0 && (frame & 3) === 0) {
     try {
+      if (!_bloomCanvas) _bloomCanvas = document.createElement('canvas');
+      const bw = Math.max(2, Math.floor(W * 0.18));
+      const bh = Math.max(2, Math.floor(H * 0.18));
+      if (_bloomCanvas.width !== bw) _bloomCanvas.width = bw;
+      if (_bloomCanvas.height !== bh) _bloomCanvas.height = bh;
+      const tctx = _bloomCanvas.getContext('2d');
+      tctx.clearRect(0, 0, bw, bh);
+      tctx.drawImage(ctx.canvas, 0, 0, bw, bh);
       ctx.save();
       ctx.globalCompositeOperation = 'lighter';
       ctx.globalAlpha = bloom * 0.18;
       ctx.imageSmoothingEnabled = true;
-      if (!_bloomCanvas) _bloomCanvas = document.createElement('canvas');
-      _bloomCanvas.width = Math.max(2, Math.floor(W * 0.18));
-      _bloomCanvas.height = Math.max(2, Math.floor(H * 0.18));
-      const tctx = _bloomCanvas.getContext('2d');
-      tctx.imageSmoothingEnabled = true;
-      tctx.clearRect(0, 0, _bloomCanvas.width, _bloomCanvas.height);
-      tctx.drawImage(ctx.canvas, 0, 0, _bloomCanvas.width, _bloomCanvas.height);
       ctx.drawImage(_bloomCanvas, 0, 0, W, H);
       ctx.restore();
     } catch (e) { /* ignore */ }
   }
 
-  // 3) Chromatic aberration: skip entirely if chrom <= 0, throttle to every 3 frames
-  if (chrom > 0 && (frame % 3) === 0) {
+  // 3) Chromatic aberration: skip entirely if chrom <= 0, throttle to every 4 frames
+  if (chrom > 0 && (frame & 3) === 0) {
     try {
-      ctx.save();
-      ctx.globalCompositeOperation = 'screen';
       if (!_chromCanvas) _chromCanvas = document.createElement('canvas');
-      _chromCanvas.width = Math.max(2, W);
-      _chromCanvas.height = Math.max(2, H);
+      if (_chromCanvas.width !== W) _chromCanvas.width = W;
+      if (_chromCanvas.height !== H) _chromCanvas.height = H;
       const cctx = _chromCanvas.getContext('2d');
       cctx.clearRect(0, 0, W, H);
       cctx.drawImage(ctx.canvas, 0, 0, W, H);
       const dx = chrom, dy = chrom * 0.3;
-      ctx.globalAlpha = 0.10;
+      ctx.save();
       ctx.globalCompositeOperation = 'lighter';
+      ctx.globalAlpha = 0.08;
       ctx.drawImage(_chromCanvas, -dx, -dy, W, H);
-      ctx.globalAlpha = 0.07;
+      ctx.globalAlpha = 0.06;
       ctx.drawImage(_chromCanvas, dx, dy, W, H);
       ctx.restore();
     } catch (e) { /* ignore */ }
   }
 
   // 4) Film grain: pre-generated 128×128 tile, drawn once (no per-frame ImageData)
-  if (grain > 0) {
+  //    Throttled to every 2 frames — grain flicker is imperceptible at 30Hz.
+  if (grain > 0 && (frame & 1) === 0) {
     const gs = 128;
     if (!_grainCanvas) {
       _grainCanvas = document.createElement('canvas');
