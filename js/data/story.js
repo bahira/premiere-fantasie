@@ -452,6 +452,131 @@ export const STORY = {
       objective: "Vaincre Kuja et sauver Gaia.",
     },
   ],
+
+  // === NOUVEAUX ARCS (13-20) ===
+  {
+    id: 13, title: "L'Origine de la Brume", location: "Cleyra",
+    intro: "Mira découvre ses origines dans les racines de l'Arbre-Monde.",
+    scenes: [
+      { speaker: "Oracle", text: "Mira... tu n'es pas nee. Tu as ete creee par la Brume." },
+      { speaker: "Mira", text: "Creee? Par qui? Pourquoi?" },
+      { speaker: "Oracle", text: "Par Raziel. Pour contenir le Vide. Mais le contenant peut devenir le contenu." },
+      { speaker: "Luan", text: "Peu importe d'ou tu viens. Tu es toi maintenant." },
+      { speaker: "Mira", text: "Je refuse d'etre une arme. Je serai une personne." },
+    ],
+    map: { startX: 400, startY: 200, width: 800, height: 400, bounds: { top: 40, bottom: 360, left: 40, right: 760 }, encounterZones: [], pois: [{ id: 'cleyra_exit', type: 'exit', x: 700, y: 400, label: 'Sortir' }], npcs: [] },
+    objective: "Comprendre la nature de Mira.",
+  },
+  {
+    id: 14, title: "Le Royaume Déchu", location: "Lindblum",
+    intro: "Les secrets de Lindblum remontent a sa chute il y a 100 ans.",
+    scenes: [
+      { speaker: "Fantome Royal", text: "Mon royaume... j'ai tout perdu par orgueil." },
+      { speaker: "Selia", text: "Les rois meurent. Les peuples survivent. C'est la lecon." },
+      { speaker: "Aldric", text: "Un chevalier sert le peuple, pas la couronne." },
+      { speaker: "Fantome Royal", text: "Reprenez mes reliques. Qu'elles servent, enfin." },
+    ],
+    map: { startX: 400, startY: 200, width: 800, height: 400, bounds: { top: 40, bottom: 360, left: 40, right: 760 }, encounterZones: [], pois: [{ id: 'lindblum_exit', type: 'exit', x: 700, y: 400, label: 'Sortir' }], npcs: [] },
+    objective: "Recuperer les reliques royales.",
+  },
+  {
+    id: 15, title: "La Guerre des Esprits", location: "Void",
+    intro: "Les Esprits anciens se reveillent. Raziel n'est qu'un messager.",
+    scenes: [
+      { speaker: "Esprit Ancien", text: "Nous sommes les Esprits. Nous avons cree. Nous avons peur." },
+      { speaker: "Mira", text: "Vous avez cree le Vide pour echapper a quoi?" },
+      { speaker: "Esprit Ancien", text: "A la fin. Toute creation craint sa fin." },
+      { speaker: "Luan", text: "Alors on cree quelque chose qui ne finit jamais. Ensemble." },
+    ],
+    map: { startX: 400, startY: 200, width: 800, height: 400, bounds: { top: 40, bottom: 360, left: 40, right: 760 }, encounterZones: [{ x: 200, y: 150, w: 100, h: 100, rate: 0.3 }], pois: [{ id: 'void_exit', type: 'exit', x: 700, y: 400, label: 'Sortir' }], npcs: [] },
+    objective: "Affronter les Esprits anciens.",
+  },
+  {
+    id: 16, title: "Le Voile Se Dechire", location: "Crystal",
+    intro: "Le voile entre les mondes se dechire. Le Vide entre.",
+    scenes: [
+      { speaker: "Selia", text: "Si le Vide entre, plus aucun monde ne sera sur." },
+      { speaker: "Aldric", text: "On ferme la breche. Coute que coute." },
+      { speaker: "Mira", text: "Je peux sceller. Mais il me faut la Couronne de Lindblum." },
+    ],
+    map: { startX: 400, startY: 200, width: 800, height: 400, bounds: { top: 40, bottom: 360, left: 40, right: 760 }, encounterZones: [{ x: 300, y: 100, w: 150, h: 150, rate: 0.4 }], pois: [{ id: 'crystal_exit', type: 'exit', x: 700, y: 400, label: 'Sortir' }], npcs: [] },
+    objective: "Sceller la breche du Vide.",
+  },
+  {
+    id: 17, title: "Le Choix de Raziel", location: "Void",
+    intro: "Raziel revele la verite: il est le createur, et le destructeur.",
+    scenes: [
+      { speaker: "Raziel", text: "Je suis ne du desir de tout controler. J'ai faille." },
+      { speaker: "Selia", text: "Tu es mon ancetre. Et mon fardeau." },
+      { speaker: "Raziel", text: "Tue-moi, ou prends ma place. Le cycle doit finir." },
+      { speaker: "Luan", text: "Y a pas que deux choix. On en fait un troisieme." },
+    ],
+    map: { startX: 400, startY: 200, width: 800, height: 400, bounds: { top: 40, bottom: 360, left: 40, right: 760 }, encounterZones: [], pois: [{ id: 'raziel_exit', type: 'exit', x: 700, y: 400, label: 'Sortir' }], npcs: [] },
+    objective: "Confronter Raziel.",
+  },
+  {
+    id: 18, title: "Le Coeur de la Brume", location: "Cleyra",
+    intro: "Mira doit accepter sa nature pour sauver tous les mondes.",
+    scenes: [
+      { speaker: "Mira", text: "Je suis la Brume. Mais la Brume peut etre une berceuse, pas une arme." },
+      { speaker: "Oracle", text: "Tu as appris ce qu'aucun Esprit n'a su: le choix." },
+      { speaker: "Mira", text: "Alors je choisis. Je scelle le Vide avec amour, pas avec peur." },
+    ],
+    map: { startX: 400, startY: 200, width: 800, height: 400, bounds: { top: 40, bottom: 360, left: 40, right: 760 }, encounterZones: [], pois: [{ id: 'cleyra2_exit', type: 'exit', x: 700, y: 400, label: 'Sortir' }], npcs: [] },
+    objective: "Mira accepte son heritage.",
+  },
+  {
+    id: 19, title: "L'Ultime Bataille", location: "Void",
+    intro: "L'affrontement final contre Raziel Supreme.",
+    scenes: [
+      { speaker: "Raziel", text: "Vous ne comprenez pas. La fin vient. Toujours." },
+      { speaker: "Luan", text: "Peut-etre. Mais entre le debut et la fin, il y a nous." },
+      { speaker: "Aldric", text: "Pour Lindblum!" },
+      { speaker: "Selia", text: "Pour Gaia!" },
+      { speaker: "Mira", text: "Pour demain!" },
+    ],
+    map: { startX: 400, startY: 200, width: 800, height: 400, bounds: { top: 40, bottom: 360, left: 40, right: 760 }, encounterZones: [], pois: [{ id: 'final_exit', type: 'exit', x: 700, y: 400, label: 'Sortir' }], npcs: [] },
+    battle: { enemies: ["supreme_raziel"], apReward: 100, expReward: 5000, isFinalBoss: true },
+    objective: "Vaincre Raziel Supreme.",
+  },
+  {
+    id: 20, title: "Les Fins (Branching)", location: "Cleyra",
+    intro: "Trois fins possibles selon tes choix (flags).",
+    scenes: [
+      { speaker: "Narrateur", text: "Selon tes actes, l'histoire diverge..." },
+      { speaker: "Luan", text: "On a fait ce qu'il fallait. J'en suis sur." },
+      { speaker: "Mira", text: "Peu importe la fin. C'est le chemin qui compte." },
+    ],
+    map: { startX: 400, startY: 200, width: 800, height: 400, bounds: { top: 40, bottom: 360, left: 40, right: 760 }, encounterZones: [], pois: [{ id: 'end_exit', type: 'exit', x: 700, y: 400, label: 'Sortir' }], npcs: [] },
+    ending: true,
+    objective: "Vivre la fin choisie.",
+  },
+};
+
+// === LORE CODEX (collectible world-building) ===
+STORY.lore = {
+  entries: [
+    { id: 'lore_brume', title: 'La Brume', text: 'Substance magique née du Vide. Elle donne vie mais efface les souvenirs.' },
+    { id: 'lore_lindblum', title: 'Lindblum', text: 'Cite-reine chute il y a 100 ans par l'orgueil de son roi.' },
+    { id: 'lore_raziel', title: 'Raziel', text: 'Premier createur, ancetre de Selia. Cherchait a controler la fin.' },
+    { id: 'lore_esprits', title: 'Les Esprits', text: 'Entites anciennes ayant cree le Vide par peur de leur propre fin.' },
+    { id: 'lore_cleyra', title: 'Cleyra', text: 'Sanctuaire-arbre gardant la memoire du monde.' },
+    { id: 'lore_gaia', title: 'Gaia', text: 'Monde natal, menace par l'expansion du Vide.' },
+    { id: 'lore_mira', title: 'Mira', text: 'Nee de la Brume pour contenir le Vide. Apprend a devenir personne.' },
+    { id: 'lore_chocobo', title: 'Chocobos', text: 'Oiseaux montures legendaire. Le doré est rare et rapide.' },
+    { id: 'lore_colosseum', title: 'Le Colisée', text: 'Arene ou les héros prouvent leur valeur par le combat.' },
+    { id: 'lore_cards', title: 'Brume (Cartes)', text: 'Jeu de cartes capture par valeurs adjacentes. Passion nationale.' },
+    { id: 'lore_void', title: 'Le Vide', text: 'Non-lieu hors creation. Toute chose y retourne sans souvenir.' },
+    { id: 'lore_crystals', title: 'Cristaux', text: 'Concentres d'energie magique. Cœurs battants des mondes.' },
+    { id: 'lore_jobs', title: 'Metiers', text: 'Chaque héros peut changer de voie, melant armes et magies.' },
+    { id: 'lore_trinity', title: 'La Trinite', text: 'Feu, Glace, Foudre — elements de base de toute magie.' },
+    { id: 'lore_doom', title: 'Le Destin', text: 'Sort ancien comptant a rebours vers la mort ineluctable.' },
+    { id: 'lore_petrify', title: 'Petrification', text: 'Pierre vivante. Seul l'Aiguille d'Or depetrifie.' },
+    { id: 'lore_berserk', title: 'Berserk', text: 'Fureur qui boost l'attaque mais vole le controle.' },
+    { id: 'lore_curse', title: 'Malédiction', text: 'Affaiblit toutes les stats de 30% tant qu'elle dure.' },
+    { id: 'lore_supreme', title: 'Raziel Supreme', text: 'Forme finale fusionnant createur et destructeur.' },
+    { id: 'lore_endings', title: 'Les Fins', text: 'Hero (force), Verite (connaissance), Sacrifice (amour) — trois issues.' },
+  ],
 };
 
 export function getChapter(id) { return STORY.chapters.find(c => c.id === id); }

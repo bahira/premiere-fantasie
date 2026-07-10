@@ -56,6 +56,32 @@ export const BANTER = {
     ally_ko:    [`Un allié tombe...`, `La situation se corse.`, `L'issue est incertaine.`],
   },
 };
+// === Character combat banter (FFIX-style voices) ===
+BANTER.luan = {
+  attack: ['Je prends ce qui me plait!', 'Vole qui peut!', 'Personne ne m'attrape.'],
+  hit: ['Aie! Ca compte pas.', 'Maudit soit ce bouclier.'],
+  victory: ['On a gagne, et je garde le butin.', 'Facile. Ou presque.'],
+  low_hp: ['J'ai connu pire dans la rue.', 'Luan ne tombe pas. Jamais.'],
+};
+BANTER.aldric = {
+  attack: ['Pour l'honneur!', 'Ma lame ne faillit pas.', 'En garde!'],
+  hit: ['Un chevalier encaisse.', 'Blessure superficielle.'],
+  victory: ['La justice triomphe.', 'Lindblum serait fier.'],
+  low_hp: ['Je tiendrai jusqu'au bout.', 'Un chevalier meurt debout.'],
+};
+BANTER.mira = {
+  attack: ['La Brume t'emporte!', 'Feu! Glace! Foudre!', 'Tu n'es qu'ombre.'],
+  hit: ['Je... je tiens.', 'La Brume me protege.'],
+  victory: ['Je ne suis pas une arme. Je suis Mira.', 'On respire. Ensemble.'],
+  low_hp: ['J'ai peur. Mais je continue.', 'Ma nature me sauve.'],
+};
+BANTER.selia = {
+  attack: ['Que la lumiere guide!', 'Soin sur nous, feu sur eux.', 'Saintete!'],
+  hit: ['Je soigne ca tout de suite.', 'Pas grave, j'ai des potions.'],
+  victory: ['Tous vivants. C'est ca, gagner.', 'La paix reviendra.'],
+  low_hp: ['Je ne lacherai personne.', 'Encore un effort...'],
+};
+
 
 // Pick a random line for a character and context
 export function getBanter(charId, context) {

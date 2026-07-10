@@ -57,5 +57,24 @@ export const ELEMENTS = {
   dark: { strong: ['holy'], weak: ['holy'], color: 0x4a148c, icon: '🌑' },
   none: { strong: [], weak: [], color: 0xcccccc, icon: '⚔' },
 };
+// === Trance / Limit-break ultimates (per character) ===
+luan_trance: { name: 'Combo Voleur', ap: 0, mp: 0, type: 'trance', power: 3.0, element: 'none', desc: 'Luan frappe 4x et vole tout.' },
+aldric_trance: { name: 'Chevalier Roi', ap: 0, mp: 0, type: 'trance', power: 4.0, element: 'holy', desc: 'Aldric frappe avec lumiere sacree.' },
+mira_trance: { name: 'Tempete Arcanique', ap: 0, mp: 0, type: 'trance', power: 3.5, element: 'none', desc: 'Mira lance tous ses sorts.' },
+selia_trance: { name: 'Benediction', ap: 0, mp: 0, type: 'trance', power: 0, element: 'holy', desc: 'Selia soigne tout le groupe + buffs.' },
+firaga_blizzaga: { name: 'Fusion Feu-Glace', ap: 0, mp: 40, type: 'magic', power: 4.0, element: 'fire', desc: 'Explosion thermique.' },
+thundaga_holy: { name: 'Fusion Foudre-Saint', ap: 0, mp: 50, type: 'magic', power: 4.5, element: 'holy', desc: 'Jugement celeste.' },
+meteor_bio: { name: 'Meteore Toxique', ap: 0, mp: 60, type: 'magic', power: 5.0, element: 'dark', status: 'poison', desc: 'Pluie mortelle.' },
+curse: { name: 'Malediction', ap: 0, mp: 14, type: 'magic', power: 1.0, element: 'dark', status: 'curse', desc: 'Maudit la cible (stats -30%).' },
+doom: { name: 'Destin', ap: 0, mp: 20, type: 'magic', power: 0, element: 'none', status: 'doom', desc: 'Compte a rebours mortel.' },
+berserk: { name: 'Berserk', ap: 0, mp: 10, type: 'support', status: 'berserk', desc: 'Augmente ATK, perd controle.' },
+confuse: { name: 'Confusion', ap: 0, mp: 8, type: 'magic', power: 0.5, element: 'none', status: 'confuse', desc: 'Desoriente la cible.' },
+petrify: { name: 'Petrification', ap: 0, mp: 16, type: 'magic', power: 1.0, element: 'earth', status: 'petrify', desc: 'Pierre la cible.' },
+silence: { name: 'Silence', ap: 0, mp: 6, type: 'magic', power: 0, element: 'none', status: 'silence', desc: 'Empeche magie.' },
+grand_cross: { name: 'Grande Croisee', ap: 0, mp: 30, type: 'attack', power: 3.0, element: 'holy', desc: 'Frappe tous les ennemis.' },
+assassinate: { name: 'Assassinat', ap: 0, mp: 18, type: 'attack', power: 2.5, element: 'none', desc: 'Coup critique garantie.' },
+earthshaker: { name: 'Secousse', ap: 0, mp: 24, type: 'attack', power: 2.8, element: 'earth', desc: 'Frappe sol + etourdit.' },
+void_cut: { name: 'Tranche du Vide', ap: 0, mp: 28, type: 'attack', power: 3.2, element: 'dark', desc: 'Dechire la realite.' },
+
 
 export function getSkill(id) { return SKILLS[id]; }

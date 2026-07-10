@@ -116,6 +116,32 @@ export const JOBS = {
       { id: 'resurrection_noir', name: 'Résurrection Noire', jpCost: 180, type: 'revive', healPct: 1.0, desc: 'Ressuscite avec PV max' },
     ],
   },
+
+  // === Advanced classes (unlock at level 20+) ===
+  trancher: {
+    id: 'trancher', name: 'Trancheur', unlockLevel: 20, weaponType: 'sword',
+    statMod: { str: 30, vit: 15, spd: 20 },
+    skills: [{ id: 'grand_cross', jpCost: 200 }, { id: 'assassinate', jpCost: 300 }, { id: 'earthshaker', jpCost: 400 }],
+    desc: 'Maître des lames ultimes.',
+  },
+  archimage: {
+    id: 'archimage', name: 'Archimage', unlockLevel: 20, weaponType: 'staff',
+    statMod: { mag: 40, mp: 30, vit: 10 },
+    skills: [{ id: 'meteor', jpCost: 200 }, { id: 'firaga_blizzaga', jpCost: 350 }, { id: 'thundaga_holy', jpCost: 450 }],
+    desc: 'Sorcier des éléments fusionnés.',
+  },
+  paladin: {
+    id: 'paladin', name: 'Paladin', unlockLevel: 20, weaponType: 'sword',
+    statMod: { str: 25, vit: 30, mag: 15 },
+    skills: [{ id: 'holy', jpCost: 200 }, { id: 'curaga', jpCost: 300 }, { id: 'protect', jpCost: 150 }],
+    desc: 'Guerrier sacré protégeant ses alliés.',
+  },
+  ombre: {
+    id: 'ombre', name: 'Ombre', unlockLevel: 20, weaponType: 'dagger',
+    statMod: { str: 35, spd: 30, luck: 20 },
+    skills: [{ id: 'void_cut', jpCost: 250 }, { id: 'curse', jpCost: 200 }, { id: 'berserk', jpCost: 150 }],
+    desc: 'Assassin manipulant le vide.',
+  },
 };
 
 // ─── Job Progression ─────────────────────────────────────────────────
